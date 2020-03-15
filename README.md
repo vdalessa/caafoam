@@ -1,7 +1,7 @@
 # caafoam
 Density based OpenFOAM solvers for Computational Aerocoustics.
 
-The solver were developed and tested using OpenFOAM v2.3.x
+The solvers were developed and tested using OpenFOAM v2.3.x
 
 Reference:
 V. D'Alessandro, M. Falone, R. Ricci.  Direct computation of aeroacoustic fields 
