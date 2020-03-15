@@ -1,5 +1,5 @@
 # caafoam
-Density based OpenFOAM solvers for Computational Aerocoustics.
+Density based OpenFOAM solvers for Computational Aeroacoustics.
 
 The solvers were developed and tested using OpenFOAM v2.3.x
 
