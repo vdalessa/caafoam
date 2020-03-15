@@ -1,0 +1,3 @@
+eikonal.cpp
+
+EXE = $(FOAM_APPBIN)/eikonal
