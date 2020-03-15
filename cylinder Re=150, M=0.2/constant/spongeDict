@@ -1,0 +1,35 @@
+
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.2.2                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      indexDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+Ls      15.0;   // Lunghezza sponge-layer 
+f        1.0;   // Minima frequenza attesa
+a        1.0;   // velocità del suono di free-stream
+M        0.2;   // Numero di Mach di free-stream
+LAD     0.75;   // Lunghezza adimensionale dello Sponge Layer
+
+//----------------------------------------------------------------------
+
+gamma    1.4;  
+pinf     1.0;
+Tinf     1.0;
+
+Uinf_x   0.2;
+Uinf_y   0.0;
+Uinf_z   0.0;
+
+
+// *********************************************************************** //
