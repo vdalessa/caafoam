@@ -1,6 +1,6 @@
 /*---------------------------------------------------------------------------*\
 Application
-    kennedyFoam
+    caafoam-m1
 
 Description
     Description
