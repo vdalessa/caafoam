@@ -1,0 +1,215 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  4.0                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+
+startFrom       latestTime;
+
+startTime       0.0; 
+
+stopAt          endTime;
+//stopAt          writeNow;
+
+endTime         2850.01;
+
+deltaT          3.0e-3;
+//deltaT          4.0e-3;
+
+writeControl    timeStep;
+
+writeInterval   5000;
+
+purgeWrite      4;
+
+writeFormat     ascii;
+
+writePrecision  12;
+
+writeCompression off;
+
+timeFormat      general;
+
+timePrecision   12;
+
+runTimeModifiable true;
+
+adjustTimeStep  no;
+
+maxCo         1.0;
+
+maxDeltaT       1.;
+
+
+pressArtDiff    false; //activate artificial diffusion on pressure
+convArtDiff     false; //activate artificial diffusion on pressure
+
+ducLevelPress       1.00;
+ducLevelConv        1.00;
+epsilon             4.0e-2;
+kp                  0.25;//25;
+ku                  0.75;//75;
+                                 
+/*
+libs (
+      "libOpenFOAM.so"
+      "libsimpleSwakFunctionObjects.so"
+      "libswakFunctionObjects.so"
+      "libgroovyBC.so"
+     );
+*/
+
+
+functions
+{
+/*
+ NusseltNumber1_front
+ {
+    type swakExpression;
+    valueType patch;
+    patchName front;
+    verbose true;
+    expression "snGrad(T)";
+    accumulations ( average );
+ }
+ NusseltNumber1_bottom
+ {
+    type swakExpression;
+    valueType patch;
+    patchName bottom;
+    verbose true;
+    expression "snGrad(T)";
+    accumulations ( average );
+ }
+ NusseltNumber1_back
+ {
+    type swakExpression;
+    valueType patch;
+    patchName back;
+    verbose true;
+    expression "snGrad(T)";
+    accumulations ( average );
+ }
+ NusseltNumber1_top
+ {
+    type swakExpression;
+    valueType patch;
+    patchName top;
+    verbose true;
+    expression "snGrad(T)";
+    accumulations ( average );
+ }
+*/
+
+
+probes
+{
+functionObjectLibs ( "libsampling.so" );
+
+type        probes;
+
+name        probes;
+
+// Fields to be probed
+fields (
+        pPrime2Mean 
+       );
+
+probeLocations
+(
+   ( 90   0.0 0.0 )         
+   ( -60  0.0 0.0 )         
+   ( 0.0   75 0.0 )
+   ( 0.0  -75 0.0 )
+);
+}
+
+
+forces
+{
+          type forces;
+          functionObjectLibs ("libforces.so");
+          patches (parete);
+          pName p;
+          UName U;
+          rhoName rhoInf;
+          rhoInf 1.4;
+          CofR (0 0 0); // Origin for moment calculations
+          writeControl timeStep;
+          writeInterval 1;
+}
+
+forceCoeffs_object
+{
+        type forceCoeffs;
+        functionObjectLibs ("libforces.so");
+        patches (parete);
+        porosity        no;
+        writeFields     no;
+        pRef            0;
+
+        p     p;
+        U     U;
+        rho   rhoInf;
+        rhoInf 1.4;
+        log yes;
+        CofR (0.0 -1.5 0);
+        liftDir (0 1 0);
+        dragDir (1 0 0);
+        pitchAxis (0 0 1);
+        magUInf 0.2;
+        lRef 1.0;
+        Aref 1.0;
+         writeControl   timeStep;
+        timeInterval    1;
+
+    //    outputControl timeStep;
+    //    outputInterval 1;
+}
+
+
+fieldAverage1
+    {
+        type            fieldAverage;
+        functionObjectLibs ( "libfieldFunctionObjects.so" );
+        enabled         true;
+        cleanRestart        true;
+        outputControl   timeStep;
+        outputInterval  5000;
+        cleanRestart false;
+        resetOnOutput false;
+        resetOnRestart false;
+
+        fields
+        (
+            U
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+
+            p
+            {
+                mean        on;
+                prime2Mean  on;
+                base        time;
+            }
+        );
+     }
+
+}
+
+// ************************************************************************* //
