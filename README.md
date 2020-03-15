@@ -1,6 +1,5 @@
 # caafoam
-Density based solvers for Compressible Navier--Stokes equation
-for Computational Aerocoustics.
+Density based OpenFOAM solvers for Computational Aerocoustics.
 
 The solver were developed and tested using OpenFOAM v2.3.x
 
