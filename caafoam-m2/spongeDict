@@ -14,11 +14,11 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-Ls      20.0;   // Lunghezza sponge-layer 
-f        1.0;   // Minima frequenza attesa
-a        1.0;   // velocità del suono di free-stream
-M        0.2;   // Numero di Mach di free-stream
-LAD     0.75;   // Lunghezza adimensionale dello Sponge Layer
+Ls      20.0;   // sponge-layer length 
+f        1.0;   // minimum frequency
+a        1.0;   // free-stream speed of sound
+M        0.2;   // Free-stream Mach number
+LAD     0.75;   // Sponge Layer dimensionless length
 
 //----------------------------------------------------------------------
 
