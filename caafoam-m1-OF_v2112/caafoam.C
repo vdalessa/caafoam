@@ -24,14 +24,6 @@ Description
 
 \*---------------------------------------------------------------------------*/
 
-/*#include "fvCFD.H"
-#include "psiThermo.H"
-#include "zeroGradientFvPatchFields.H"
-#include "turbulenceModel.H"
-#include "OFstream.H"
-*/
-//
-
 #include "fvCFD.H"
 #include "psiThermo.H"
 #include "turbulentFluidThermoModel.H"
