@@ -1,3 +1,0 @@
-caafoam.C
-
-EXE = $(FOAM_USER_APPBIN)/caafoam-m1
