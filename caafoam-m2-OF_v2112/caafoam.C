@@ -56,6 +56,7 @@ Description
 
 #include "fvCFD.H"
 #include "psiThermo.H"
+//#include "turbulenceModel.H"
 #include "turbulentFluidThermoModel.H"
 #include "zeroGradientFvPatchFields.H"
 #include "fixedRhoFvPatchScalarField.H"
@@ -113,15 +114,6 @@ int main(int argc, char *argv[])
     #include "createTime.H"
     #include "createMesh.H"
     #include "createFields.H"
-    #include "createTimeControls.H"
-
-    //turbulence->validate();
-
-    /*#include "createTime.H"
-    #include "createMeshNoClear.H"
-    #include "createFields.H"
-    #include "readThermophysicalProperties.H"
-    #include "readTimeControls.H"*/
     #include "variables.H"
     #include "readSponge.H"
   	//  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -171,19 +163,9 @@ int main(int argc, char *argv[])
 //
 //      Evaluate viscous terms
 //
-//      Divergence of the velocity        
-        vecDivU.component(0) = fvc::interpolate(fvc::div(U));
-        vecDivU.component(1) = fvc::interpolate(fvc::div(U));
-        vecDivU.component(2) = fvc::interpolate(fvc::div(U));
-     
-        surfaceVectorField cazz =  -2./3.*vecDivU*mesh.magSf();
-        cazz.setOriented(true);                                 ;
-        
-//
         volScalarField muEff(turbulence->muEff());
         surfaceScalarField  muave  = fvc::interpolate(muEff);//mu at cell faces
 //
-        //volScalarField k("k", thermo.Cp()*muEff/Pr);//thermal diffusivity
         volScalarField k("k", thermo.Cp()*muEff/0.71);//thermal diffusivity
 //
         surfaceScalarField kave=fvc::interpolate(k);//k at cell faces. alphaEff=muEff/Prt
@@ -199,8 +181,8 @@ int main(int argc, char *argv[])
         // Total fluxes, Eulerian + viscous 
         surfaceScalarField rhoFlux   = -rhoave*phi ;   
         rhoFlux.setOriented(false);                                 ;
-        momFlux                      = -rhoave*Uave*phi - pave*mesh.Sf();// + momVisFlux  ;
-        enFlux                       = -rhoave*Have*phi;// + enVisFlux                    ;
+        momFlux                      = -rhoave*Uave*phi - pave*mesh.Sf();
+        enFlux                       = -rhoave*Have*phi;
 //
         if(convArtDiff)
         {
@@ -219,6 +201,7 @@ int main(int argc, char *argv[])
         rhoU  = rhoUOld +  wrhoU * RK4values2[cycle];
 
         //Update primitive variables and boundary conditions
+        //U.dimensionedInternalField() = rhoU.dimensionedInternalField() / rho.dimensionedInternalField();
         U.ref() =
                     rhoU()
                    /rho();
@@ -240,6 +223,7 @@ int main(int argc, char *argv[])
                 e.boundaryField() + 0.5*magSqr(U.boundaryField())
             );
 //
+//        p.dimensionedInternalFieldRef() = rho.dimensionedInternalField() / psi.dimensionedInternalField();
         p.ref() =
                     rho()
                    /psi();
