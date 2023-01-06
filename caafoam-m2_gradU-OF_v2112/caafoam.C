@@ -56,7 +56,6 @@ Description
 
 #include "fvCFD.H"
 #include "psiThermo.H"
-//#include "turbulenceModel.H"
 #include "turbulentFluidThermoModel.H"
 #include "zeroGradientFvPatchFields.H"
 #include "fixedRhoFvPatchScalarField.H"
@@ -114,15 +113,6 @@ int main(int argc, char *argv[])
     #include "createTime.H"
     #include "createMesh.H"
     #include "createFields.H"
-    #include "createTimeControls.H"
-
-    //turbulence->validate();
-
-    /*#include "createTime.H"
-    #include "createMeshNoClear.H"
-    #include "createFields.H"
-    #include "readThermophysicalProperties.H"
-    #include "readTimeControls.H"*/
     #include "variables.H"
     #include "readSponge.H"
   	//  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
@@ -184,19 +174,16 @@ int main(int argc, char *argv[])
 
 	volTensorField     gU     = fvc::grad(U) ;
         surfaceTensorField gU_ave = fvc::interpolate( gU.T()  ) ;
-//        surfaceVectorField gU_tp  =  gU_ave & (mesh.Sf()/mesh.magSf() )  ;
         surfaceVectorField gU_tp  =  gU_ave & (mesh.Sf())  ;
 //
         volScalarField muEff(turbulence->muEff());
         surfaceScalarField  muave  = fvc::interpolate(muEff);//mu at cell faces
 //
-        //volScalarField k("k", thermo.Cp()*muEff/Pr);//thermal diffusivity
         volScalarField k("k", thermo.Cp()*muEff/0.71);//thermal diffusivity
 //
         surfaceScalarField kave=fvc::interpolate(k);//k at cell faces. alphaEff=muEff/Prt
         //momentum viscous flux
         surfaceVectorField momVisFlux = muave*(fvc::snGrad(U)*mesh.magSf() + duV + gU_tp);
-        //surfaceVectorField momVisFlux = muave*(fvc::snGrad(U)*mesh.magSf() -  2./3.*vecDivU*mesh.magSf());
         momVisFlux.setOriented(true);
         //energy viscous flux
         surfaceScalarField heatFlux =  kave*fvc::snGrad(T)*mesh.magSf();
@@ -226,7 +213,6 @@ int main(int argc, char *argv[])
         rhoU  = rhoUOld +  wrhoU * RK4values2[cycle];
 
         //Update primitive variables and boundary conditions
-        //U.dimensionedInternalField() = rhoU.dimensionedInternalField() / rho.dimensionedInternalField();
         U.ref() =
                     rhoU()
                    /rho();
@@ -248,7 +234,6 @@ int main(int argc, char *argv[])
                 e.boundaryField() + 0.5*magSqr(U.boundaryField())
             );
 //
-//        p.dimensionedInternalFieldRef() = rho.dimensionedInternalField() / psi.dimensionedInternalField();
         p.ref() =
                     rho()
                    /psi();
