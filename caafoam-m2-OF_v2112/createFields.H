@@ -6,18 +6,11 @@ autoPtr<psiThermo> pThermo
 );
 psiThermo& thermo = pThermo();
 
-/*volScalarField& p = thermo.p();
-volScalarField& e = thermo.e();
-const volScalarField& T = thermo.T();
-const volScalarField& psi = thermo.psi();*/
 
 volScalarField& p = thermo.p();
 volScalarField& e = thermo.he();
 const volScalarField& T = thermo.T();
 const volScalarField& psi = thermo.psi();
-const volScalarField& mu = thermo.mu();
-
-
 
 Info<< "Reading field U\n" << endl;
 
@@ -34,7 +27,7 @@ volVectorField U
     ),
     mesh
 );
-//#include "rhoBoundaryTypes.H"
+
 volScalarField rho
 (
     IOobject
@@ -113,7 +106,6 @@ surfaceScalarField neg
     dimensionedScalar("neg", dimless, -1.0)
 );
 
-   #include "readInput.H"
 volScalarField eps
 (
     IOobject
@@ -158,7 +150,7 @@ autoPtr<compressible::turbulenceModel> turbulence
         thermo
     )
 );
-//    #include "pressureGrad.H"
+
 //  define RK coefficient 
 
 /*    scalarList rkCoeff(0) ;
