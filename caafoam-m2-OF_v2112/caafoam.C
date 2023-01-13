@@ -122,13 +122,13 @@ int main(int argc, char *argv[])
     Info<< "Start Timing = " << runTime.clockTimeIncrement() << " s"
         << nl << endl;
     #include "createSponge.H"
-       rhoOld  = rho; 
-       rhoUOld = rhoU; 
-       rhoEOld = rhoE; 
+    rhoOld  = rho; 
+    rhoUOld = rhoU; 
+    rhoEOld = rhoE; 
 
-       wrhoOld  = wrho; 
-       wrhoUOld = wrhoU; 
-       wrhoEOld = wrhoE; 
+    wrhoOld  = wrho; 
+    wrhoUOld = wrhoU; 
+    wrhoEOld = wrhoE; 
 
     while (runTime.loop()) //Start time loop
     {
@@ -136,14 +136,7 @@ int main(int argc, char *argv[])
 
 
 //     Saving quantities at preavious time step
-/*       rhoOld  = rho; 
-       rhoUOld = rhoU; 
-       rhoEOld = rhoE; 
-//
-       wrhoOld  = wrho; 
-       wrhoUOld = wrhoU; 
-       wrhoEOld = wrhoE; 
-*/
+
 //     RK Time step
        //#include "createSponge.H"
        for (int cycle =0; cycle < RK4values.size(); cycle++)
