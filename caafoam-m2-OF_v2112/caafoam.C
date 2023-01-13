@@ -192,7 +192,7 @@ int main(int argc, char *argv[])
         }
 //
 //
-        volScalarField rhoFl = fvc::div(rhoFlux) +  blendFactor_*(rhoRef - rho)  ;
+        volScalarField rhoFl = fvc::div(rhoFlux) + blendFactor_*(rhoRef - rho)  ;
         volVectorField momFl = fvc::div(momFlux) + momVisFlux + blendFactor_*(rhoRef*URef - rho*U);
         volScalarField enFl  = fvc::div(enFlux)  + enVisFlux + blendFactor_*(rhoRef*ERef - rhoE);
         // RK sub-step
