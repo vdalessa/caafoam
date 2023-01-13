@@ -1,0 +1,3 @@
+caafoam.C
+
+EXE = $(FOAM_APPBIN)/caafoam-m2_mod
