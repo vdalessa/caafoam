@@ -194,7 +194,7 @@ int main(int argc, char *argv[])
 //
         volScalarField rhoFl = fvc::div(rhoFlux) + blendFactor_*(rhoRef - rho)  ;
         volVectorField momFl = fvc::div(momFlux) + momVisFlux + blendFactor_*(rhoRef*URef - rho*U);
-        volScalarField enFl  = fvc::div(enFlux)  + enVisFlux + blendFactor_*(rhoRef*ERef - rhoE);
+        volScalarField enFl  = fvc::div(enFlux)  + enVisFlux  + blendFactor_*(rhoRef*ERef - rhoE);
         // RK sub-step
         wrho = RK4values[cycle]*wrhoOld + runTime.deltaT()*(rhoFl);    
         rho  = rhoOld + wrho*RK4values2[cycle];
