@@ -165,11 +165,7 @@ int main(int argc, char *argv[])
 //
 //      Evaluate viscous terms
 //
-//      Divergence of the velocity        
-/*        vecDivU.component(0) = fvc::interpolate(fvc::div(U));
-        vecDivU.component(1) = fvc::interpolate(fvc::div(U));
-        vecDivU.component(2) = fvc::interpolate(fvc::div(U));
-*/     
+//      Divergence of the velocity             
         surfaceVectorField duV =  -2./3.*fvc::interpolate(fvc::div(U))*mesh.Sf();
         duV.setOriented(true);                                
 
