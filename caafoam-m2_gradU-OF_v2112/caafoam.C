@@ -258,7 +258,7 @@ int main(int argc, char *argv[])
  
     
     }
-        runTime.write();
+    runTime.write();
     Info<< "Start Timing = " << runTime.clockTimeIncrement() << " s"
         << nl << endl;
 
